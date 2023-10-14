@@ -16,7 +16,12 @@ class Grayscale(_Processor):
 
 		for i in range(row):
 			for j in range(col):
-				img[i, j] = sum(img[i, j]) * 0.33
+				rgb = img[i, j]
+
+				# old way
+				# img[i, j] = sum(img[i, j]) * 0.33
+				
+				img[i, j] = rgb[0] * 0.3 + rgb[1] * 0.59 + rgb[2] * 0.11
 		
 		cv2.imwrite(self.output_URL, img)
 		

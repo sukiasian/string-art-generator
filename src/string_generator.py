@@ -30,9 +30,11 @@ class String_Generator:
 
 
 	def __set_pins_coordinates(self): 
+		r = self.source_image.shape[0] / 2 
+
 		for i in range(0, self.pins): 
-			x = self.__get_x_0(i * self.angle_between_pins)
-			y = self.__get_y_0(i * self.angle_between_pins)
+			x = self.__get_x_0(i * self.angle_between_pins) + r
+			y = self.__get_y_0(i * self.angle_between_pins) + r
 
 			self.pins_coordinates.append((x, y))
 
@@ -82,6 +84,8 @@ class String_Generator:
 		bresenham_args_floored = list(map(lambda coordinate: math.floor(coordinate), bresenham_args))
 
 		intersection_points = list(bresenham(*bresenham_args_floored))
+
+		print(intersection_points, x0, x1)
 
 		intensity = 0
 
@@ -145,7 +149,8 @@ class String_Generator:
 			): 
 				check_if_pin_is_in_bounds_args = (initial_pin_number, j, offset)
 
-				if self.__current_pin_to_connect_with_is_allowed(initial_pin_number, j) and (self.__pin_is_allowed_for_overflowing_offset(*check_if_pin_is_in_bounds_args) or self.__pin_is_allowed_for_neutral_offset(*check_if_pin_is_in_bounds_args) or self.__pin_is_allowed_for_underflowing_offset(*check_if_pin_is_in_bounds_args)): 
+				# if self.__current_pin_to_connect_with_is_allowed(initial_pin_number, j) and (self.__pin_is_allowed_for_overflowing_offset(*check_if_pin_is_in_bounds_args) or self.__pin_is_allowed_for_neutral_offset(*check_if_pin_is_in_bounds_args) or self.__pin_is_allowed_for_underflowing_offset(*check_if_pin_is_in_bounds_args)): 
+				if self.__current_pin_to_connect_with_is_allowed(initial_pin_number, j): 
 					# also need to check if number is allowed 
 					avg_intensity = self.__get_average_intensity(initial_pin_number, j)
 
@@ -163,6 +168,14 @@ class String_Generator:
 
 			self.output.append(initial_pin_number)
 
+
+
+""" 
+
+	1. взять промежуток - до 6000 к примеру, и там решать сколько нитей сделать, высчитывая ошибку
+	2.  Брать какой то зазор - если фотография будет лучше выглядеть - то добавить +- n нитей 
+
+"""
 
 
 			
